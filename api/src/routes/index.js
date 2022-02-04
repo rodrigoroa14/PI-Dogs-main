@@ -19,7 +19,7 @@ const getApiInfo = async () => {
             height: e.height.metric,
             weight: e.weight.metric,
             life_span: e.life_span,
-            temperament: [e.temperament].join().split(',').map(e => e.trim()),
+            temperament: [e.temperament].join(', ').split(', '),
             image: e.image.url
         }
     })
@@ -46,6 +46,7 @@ return InfoTotal
 
 router.get('/dogs', async (req,res)=> {
     const name = req.query.name;
+    try{
     let TotalDogs = await getAllDogs();
     if(name){
         let DogName = await TotalDogs.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))
@@ -53,24 +54,33 @@ router.get('/dogs', async (req,res)=> {
     } else {
         res.status(200).send(TotalDogs)
     }
+    } 
+    catch (err) {
+        console.log(err)
+        res.status(404).send(err)
+    }
 })
 router.get('/temperament', async (req, res) => {
+    try {
     const tempApi = await axios.get('https://api.thedogapi.com/v1/breeds?api_key=bc35800b-06a0-461a-8d92-090c912a408c');
-    const temp = tempApi.data.map(e => e.temperament).join().split(',')
-    // const Trim = temp.map(e => e.trim())
+    const temp = tempApi.data.map(e => e.temperament).join(', ').split(', ')
     temp.forEach(e => {
         Temperament.findOrCreate({
             where: {name: e}
         })
     });
     const AllTemps = await Temperament.findAll();
-    // console.log(AllTemps)
     res.status(200).send(AllTemps)
+    }
+    catch (err){
+        console.log(err)
+        res.status(404).send(err)
+    }
 })
 
 router.post('/dog', async (req, res) => {
+    const { name, height, weight, life_span, createdInDb, temperament, image } = req.body;
     try{
-        const { name, height, weight, life_span, createdInDb, temperament } = req.body;
         if (!name || !height || !weight)
           return res.status(404).send("El nombre, altura y peso son requeridos");
         const creatingDog = await Dog.create({
@@ -78,6 +88,7 @@ router.post('/dog', async (req, res) => {
           height,
           weight,
           life_span,
+          image,
         });
         let tempDb = await Temperament.findAll({
             where: {name: temperament}
