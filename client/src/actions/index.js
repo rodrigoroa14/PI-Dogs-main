@@ -12,11 +12,16 @@ export function getDogs() {
 
 export function getDetail(id) {
     return async (dispatch) => {
+      try{
       const json = await axios.get(`http://localhost:3001/dogs/${id}`);
       return dispatch({
         type: 'GET_DETAIL',
         payload: json.data,
       });
+      }
+      catch(err) {
+        console.log(err)
+      };
     };
   }
 export function getTemperaments() {

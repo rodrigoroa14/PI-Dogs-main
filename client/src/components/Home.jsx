@@ -20,6 +20,7 @@ export default function Home () {
     const dispatch = useDispatch();
     const allDogs = useSelector((state)=> state.dogs);
     const temperaments = useSelector((state) => state.temperaments);
+    // console.log(temperaments)
     const [temperament, setTemperament] = useState('All')
     const [currentPage, setCurrentPage] = useState(1)
     const [orden, setOrden] = useState('')
@@ -34,7 +35,6 @@ export default function Home () {
 
     useEffect(()=> {
         dispatch(getDogs());
-        dispatch(filterByTemperament());
         dispatch(getTemperaments());
     }, [dispatch])
     

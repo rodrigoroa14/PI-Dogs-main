@@ -3,6 +3,7 @@ import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { getDetail, getTemperaments } from "../actions";
 import { useEffect } from "react";
+import perrito from '../imagenes/createdDog_files/giphy.gif'
 
 export default function Detail(props){
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function Detail(props){
                 DogDetail.length > 0 ?
                 <div>
                     <h1>{DogDetail[0].name}</h1>
-                    <img src={DogDetail[0].img? DogDetail[0].img : DogDetail[0].image}/>
+                    <img src={DogDetail[0].img? DogDetail[0].img : DogDetail[0].image? DogDetail[0].image : perrito }/>
                     <ul>
                         <li>
                             <h4>Height: {DogDetail[0]?.height + ' cm'}</h4>

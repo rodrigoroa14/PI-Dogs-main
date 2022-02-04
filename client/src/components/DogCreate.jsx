@@ -23,17 +23,17 @@ function validate(input) {
      if(!input.life_span) {
         errors.life_span = "life span is required"
     }
-     if(!input.temperament) {
+     if(input.temperament.length===0) {
         errors.temperament = "enter at least one temperament"
     } else{
         if(input.height){
             arr = input.height.split(" ")
-            // console.log(arr)
             if(arr.length !== 3 || arr[1] !== '-'){
                 errors.height = 'enter a min range height and max range height separate with " - "'
             } else if(Number(arr[0]) > Number(arr[2])){
                 errors.height = 'height invalid. Please try again'
-          }
+          } 
+            
         }
         if(input.weight){
             arr = input.weight.split(" ")
@@ -59,7 +59,6 @@ export default function DogCreate(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const temperaments = useSelector((state)=> state.temperaments)
-    // console.log(temperaments)
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({
         name: "",
@@ -76,15 +75,13 @@ function handleChange(e){
         [e.target.name] : e.target.value
        
     })
-//     setErrors(validate(
-//         input
-//         [e.target.name] : e.target.value
-//     ))
+
  }
  useEffect(()=> {
      setErrors(validate(input))
  }, [input])
 function handleSelect(e){
+    console.log(e.target.value)
     setInput({
         ...input,
         temperament: [...input.temperament, e.target.value]
@@ -104,10 +101,10 @@ function handleSubmit(e){
     })
     navigate('/home')
 }
-function handleDelete(e){
+function handleDelete(t){
     setInput({
         ...input,
-        temperament: input.temperament.filter(tem => tem !== e)
+        temperament: input.temperament.filter(tem => tem !== t)
     })
 }
 
@@ -170,7 +167,7 @@ return(
                     <span className="error">{errors.life_span}</span>
                 )}
             </div>
-            <div className="inputs">
+            {/* <div className="inputs">
             <label>Image:</label>
                 <input className="input"
                 type="text"
@@ -178,26 +175,30 @@ return(
                 name="image"
                 onChange={handleChange}
                 />
-            </div>
+            </div>     */}
+            
             <span>Temperaments:</span>
-            <select className="input" onChange={(e)=>handleSelect(e)}>
+            <select className="input" onChange={(e)=>handleSelect(e)} >
                 {temperaments.map((t)=> (
                     <option value={t.name}>{t.name}</option>
                 ))}
-                {errors.temperament && (
-                    <span>{errors.temperament}</span>
-                )}
             </select>
-            <h4 onChange={handleChange}>
+            {errors.temperament && (
+                    <span className="error">{errors.temperament}</span>
+                )}
+            
+            <div>
+             <h4>
                 {input.temperament.map(e => e + " ")}
-            </h4>
-            {console.log(input.temperament)}
+             </h4>
+            </div>
             <button className="button" disabled={Object.keys(errors).length > 0} type="submit" >Create Dog</button>
+        
         </form>
         {input.temperament.map(e=>
             <div>
                 <p>{e.name}</p>
-                <button className="button" onClick={()=>handleDelete(e)}>X</button>
+                <button  onClick={()=>handleDelete(e)}>X</button>
             </div>
             )}
     </div>

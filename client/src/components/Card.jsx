@@ -1,5 +1,6 @@
 import React from "react";
 import './Card.css'
+import perrito from '../imagenes/createdDog_files/giphy.gif'
 
 export default function Card({name, img, temperament, temperaments, id}){
   // console.log(temperament)
@@ -10,7 +11,7 @@ export default function Card({name, img, temperament, temperaments, id}){
               <h3>{name}</h3>
             </div>
             <div>
-              <img src={img} alt='img not found' className="img"/>
+              <img src={img?img: perrito} alt='img not found' className="img"/>
             </div>
             <u>Temperament</u> <br />
             {temperament

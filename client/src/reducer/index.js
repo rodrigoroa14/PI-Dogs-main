@@ -1,8 +1,10 @@
+
 const initialState = {
     dogs: [],
     backup: [],
     temperaments: [],
-    detail: []
+    detail: [],
+    
 }
 
 function rootReducer (state= initialState, action) {
@@ -19,7 +21,6 @@ function rootReducer (state= initialState, action) {
                   detail: action.payload,
                 };
         case 'GET_TEMPERAMENTS':
-                // console.log(action.payload)
                 return {
                      ...state,
                     temperaments: action.payload
@@ -29,14 +30,19 @@ function rootReducer (state= initialState, action) {
                 const temperamentsFiltered =
                   action.payload === "All"
                   ? allDogs
-                  : allDogs.filter((e) =>
+                  : allDogs.filter((e) => 
                    e.temperament?.includes(action.payload) 
+                  );
+                  const dbFilter = 
+                  allDogs.filter(e=> {
+                      if(e.createdInDb === true) {
+                         return e.temperaments.map(e=> e.name).includes(action.payload)}})
+                  const totalFilter = temperamentsFiltered.concat(dbFilter)
                   
-                    );
-                    // console.log(action.payload)
                     return {
                         ...state,
-                        dogs: temperamentsFiltered
+                        dogs: totalFilter
+               
                 };
         
         case 'GET_BY_NAME':
@@ -57,20 +63,20 @@ function rootReducer (state= initialState, action) {
                 }
         case 'ORDER_BY_NAME':
                 let sortedArr = action.payload === 'A-Z' ?
-                state.dogs.sort(function(a, b) {
-                    if(a.name>b.name) {
+                state.dogs.sort(function(prev, next) {
+                    if(prev.name>next.name) {
                         return 1;
                     }
-                    if(b.name>a.name){
+                    if(prev.name<next.name){
                         return -1
                     }
                     return 0
                 }) :
-                state.dogs.sort(function(a, b) {
-                    if(a.name>b.name) {
+                state.dogs.sort(function(prev, next) {
+                    if(prev.name>next.name) {
                         return -1
                     }
-                    if(b.name>a.name){
+                    if(prev.name<next.name){
                         return 1
                     }
                     return 0
@@ -82,23 +88,11 @@ function rootReducer (state= initialState, action) {
             case 'ORDER_BY_WEIGHT':
                 let dogui = state.backup
                 let sortedArray = action.payload === 'less' ?
-                    dogui.sort(function(a, b) {
-                    if(Number(b.weight.split("-")[0]) > Number(a.weight.split("-")[0])) {
-                        return -1;
-                    }
-                    if(Number(b.weight.split("-")[0]) > Number(a.weight.split("-")[0])){
-                        return 1
-                    }
-                    return 0
+                    dogui.sort(function(prev, next) {
+                    return Number(prev.weight.split("-")[0]) - Number(next.weight.split("-")[0])
                 }) :
-                    dogui.sort(function(a, b) {
-                    if( Number(a.weight.split("-")[0]) > Number(b.weight.split("-")[0])) {
-                        return -1
-                    }
-                    if(Number(a.weight.split("-")[0]) > Number(b.weight.split("-")[0])){
-                        return 1
-                    }
-                    return 0
+                    dogui.sort(function(prev, next) { 
+                    return Number(next.weight.split("-")[0]) - Number(prev.weight.split("-")[0])
                 })
             return {
                 ...state,
