@@ -51,17 +51,6 @@ function validate(input) {
                 errors.life_span = 'life span invalid. Please try again'
             }
         }
-        if(input.temperament){
-            for(let i =0; i < input.temperament.lenght; i++){
-                if(input.temperament.includes(input.temperament[i])){
-                    return errors.temperament = "this temperament is already chosen"
-                }
-            } {
-
-            }
-            
-            return errors.temperament ="this temperament is already chosen"
-        }
     }
     return errors
 }
