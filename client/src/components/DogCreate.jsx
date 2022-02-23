@@ -30,7 +30,7 @@ function validate(input) {
             arr = input.height.split(" ")
             if(arr.length !== 3 || arr[1] !== '-'){
                 errors.height = 'enter a min range height and max range height separate with " - "'
-            } else if(Number(arr[0]) > Number(arr[2])){
+            } else if(Number(arr[0]) > Number(arr[2]) || Number(arr[0] < 0) || Number(arr[2])< 0){
                 errors.height = 'height invalid. Please try again'
           } 
             
@@ -50,6 +50,17 @@ function validate(input) {
               } else if(Number(arr[0]) > Number(arr[2])){
                 errors.life_span = 'life span invalid. Please try again'
             }
+        }
+        if(input.temperament){
+            for(let i =0; i < input.temperament.lenght; i++){
+                if(input.temperament.includes(input.temperament[i])){
+                    return errors.temperament = "this temperament is already chosen"
+                }
+            } {
+
+            }
+            
+            return errors.temperament ="this temperament is already chosen"
         }
     }
     return errors
@@ -84,7 +95,11 @@ function handleSelect(e){
     console.log(e.target.value)
     setInput({
         ...input,
-        temperament: [...input.temperament, e.target.value]
+        temperament: !input.temperament.includes(e.target.value) ? 
+        [...input.temperament, e.target.value] :
+        [...input.temperament]
+        
+        
     })
 }
 function handleSubmit(e){
