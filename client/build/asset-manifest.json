@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.00498949.chunk.css",
+    "main.js": "/static/js/main.637459b9.chunk.js",
+    "main.js.map": "/static/js/main.637459b9.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.16ca6f45.js",
+    "runtime-main.js.map": "/static/js/runtime-main.16ca6f45.js.map",
+    "static/js/2.e9af203f.chunk.js": "/static/js/2.e9af203f.chunk.js",
+    "static/js/2.e9af203f.chunk.js.map": "/static/js/2.e9af203f.chunk.js.map",
+    "static/js/3.115c7b4b.chunk.js": "/static/js/3.115c7b4b.chunk.js",
+    "static/js/3.115c7b4b.chunk.js.map": "/static/js/3.115c7b4b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.00498949.chunk.css.map": "/static/css/main.00498949.chunk.css.map",
+    "static/js/2.e9af203f.chunk.js.LICENSE.txt": "/static/js/2.e9af203f.chunk.js.LICENSE.txt",
+    "static/media/Home.css": "/static/media/fondPerritos3.28c5ac97.jpg",
+    "static/media/giphy.44c84bdf.gif": "/static/media/giphy.44c84bdf.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.16ca6f45.js",
+    "static/js/2.e9af203f.chunk.js",
+    "static/css/main.00498949.chunk.css",
+    "static/js/main.637459b9.chunk.js"
+  ]
+}

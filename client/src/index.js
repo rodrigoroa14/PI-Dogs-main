@@ -12,7 +12,7 @@ dotenv.config();
 const { PORT } = process.env
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API || PORT;
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Provider store={store}>
